@@ -17,22 +17,45 @@ class movieDetailsViewController: UIViewController {
     
     @IBOutlet weak var movieRuntime: UILabel!
     @IBOutlet weak var movieSynopsis: UILabel!
-    
     @IBOutlet weak var movieMPAA: UIImageView!
+    
+    @IBOutlet weak var movieScrollView: UIScrollView!
     
     var movieDetails: NSDictionary?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-  
+        
         let movie = movieDetails! as NSDictionary
         
         let poster = (movie["posters"] as NSDictionary)["detailed"] as NSString
         let high_res_poster = poster.stringByReplacingOccurrencesOfString("_tmb", withString: "_ori")
         println("\(high_res_poster)")
+        
+        let url_low_res = NSURL(string: poster)
         let url = NSURL(string: high_res_poster)
-        self.moviePoster.setImageWithURL(url)
+        
+        let url_request_low_res = NSURLRequest(URL: url_low_res!)
+        let url_request = NSURLRequest(URL: url!)
+        let placeholder = UIImage(named: "no_photo")
+        
+        self.moviePoster.setImageWithURLRequest(url_request_low_res, placeholderImage: placeholder, success: { [weak self] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in
+            println("Success low res")
+            self?.moviePoster.image = image
+            self?.moviePoster.setImageWithURLRequest(url_request, placeholderImage: placeholder, success: { [weak self] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in
+                println("Success high res")
+                self?.moviePoster.image = image
+                }, failure: { [weak self]
+                    (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
+                    println("Failed")
+            })
+            }, failure: { [weak self]
+                (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
+                println("Failed")
+        })
+
+        
         
         let title = (movieDetails!["title"] as NSString)
         let date = " (" + ((movieDetails!["release_dates"] as NSDictionary)["theater"] as NSString) + ")"
@@ -53,9 +76,7 @@ class movieDetailsViewController: UIViewController {
 
         self.movieRatingPercentage.text = rating.description + "%"
 
-        let synopsis = movie["synopsis"] as NSString
-        self.movieSynopsis.text = synopsis
-
+        
         let runtime = movie["runtime"] as Int
         self.movieRuntime.text = "Runtime: \(runtime.description) mins"
         
@@ -77,6 +98,12 @@ class movieDetailsViewController: UIViewController {
             let pg_url = NSURL(string: pg)
             self.movieMPAA.setImageWithURL(pg_url)
         }
+        
+        //XXX: Fix sizing of this
+        let synopsis = movie["synopsis"] as NSString
+        self.movieSynopsis.text = synopsis
+        self.movieScrollView.contentSize=CGSizeMake(320,520);
+
     }
 
     override func didReceiveMemoryWarning() {

@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UITableViewController {
 
 //    @IBOutlet weak var moviesTableView: UITableView!
-    
+        
     var moviesArray: NSArray?
     
     
@@ -20,6 +20,7 @@ class ViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         //moviesTableView.rowHeight = 100.00
         //moviesTableView.dataSource = self
+        self.navigationItem.title = "Booyakasha"
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         tableView.insertSubview(self.refreshControl!, atIndex: 0)
@@ -34,6 +35,8 @@ class ViewController: UITableViewController {
     
     
     func reload() {
+        //UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+
         SVProgressHUD.show()
 
         let YourApiKey = "nxdq2a74ehrv2r8bvjqxvcwp"
@@ -42,12 +45,21 @@ class ViewController: UITableViewController {
         let request = NSMutableURLRequest(URL: NSURL(string: RottenTomatoesURLString)!)
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler:{ (response, data, error) in
-            var errorValue: NSError? = nil
-            let dictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &errorValue) as NSDictionary
-            self.moviesArray = dictionary["movies"] as? NSArray
-            self.tableView.reloadData()
+            if error == nil {
+                var errorValue: NSError? = nil
+                let dictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &errorValue) as NSDictionary
+                self.moviesArray = dictionary["movies"] as? NSArray
+                self.tableView.reloadData()
+            } else {
+                var label = UILabel(frame: CGRectMake(0, 0, 200, 100))
+                label.center = CGPointMake(180, 24)
+                label.textAlignment = NSTextAlignment.Center
+                label.text = "Network Error!"
+                self.view.addSubview(label)
+            }
+
+            SVProgressHUD.dismiss()
             
-            //println("\(self.moviesArray)")
         })
     }
 
@@ -57,7 +69,7 @@ class ViewController: UITableViewController {
     }
     
      override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        SVProgressHUD.show()
         
         let movie = self.moviesArray![indexPath.row] as NSDictionary
         let cell = tableView.dequeueReusableCellWithIdentifier("codepath.mycell") as MovieTableViewCell
@@ -66,9 +78,23 @@ class ViewController: UITableViewController {
         let poster = (movie["posters"] as NSDictionary)["detailed"] as NSString
         let high_res_poster = poster.stringByReplacingOccurrencesOfString("_tmb", withString: "_ori")
         //println("\(high_res_poster)")
+        let url_low_res = NSURL(string: poster)
         let url = NSURL(string: high_res_poster)
-        cell.movieImage.setImageWithURL(url)
+        cell.movieImage.setImageWithURL(url_low_res)
         
+        //try better way
+        let url_request = NSURLRequest(URL: url!)
+        let placeholder = UIImage(named: "no_photo")
+        cell.movieImage.setImageWithURLRequest(url_request, placeholderImage: placeholder, success: { [weak cell] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in
+            cell?.movieImage.image = image
+            SVProgressHUD.dismiss()
+            //println("Success")
+            }, failure: { [weak cell]
+                (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
+              //  println("Failed")
+                SVProgressHUD.dismiss()
+        })
+            
         
         let synopsis = movie["synopsis"] as NSString
         cell.movieDesc.text = synopsis
