@@ -4,7 +4,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'RottenTomatoes' do
 
-pod 'AFNetworking', '~> 2.0'
+pod 'AFNetworking', '~> 2.5.0'
 pod 'SVProgressHUD', '~> 1.1.2'
 
 end

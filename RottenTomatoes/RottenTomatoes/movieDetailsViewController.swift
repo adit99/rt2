@@ -48,19 +48,20 @@ class movieDetailsViewController: UIViewController {
                 self?.moviePoster.image = image
                 }, failure: { [weak self]
                     (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
-                    println("Failed")
+                    println("Failed to get high res poster")
             })
             }, failure: { [weak self]
                 (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
-                println("Failed")
+                println("Failed to get low res poster")
         })
 
         
         
         let title = (movieDetails!["title"] as NSString)
         let date = " (" + ((movieDetails!["release_dates"] as NSDictionary)["theater"] as NSString) + ")"
-
         self.movieTitle.text = title + date
+        self.navigationItem.title = title
+
         
         let rating_image_rotten = "http://d3biamo577v4eu.cloudfront.net/static/images/trademark/rotten.png"
         let rating_image_fresh = "http://d3biamo577v4eu.cloudfront.net/static/images/trademark/fresh.png"

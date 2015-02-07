@@ -8,27 +8,24 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
-
-//    @IBOutlet weak var moviesTableView: UITableView!
-        
+class BoxOfficeViewController: UITableViewController {
+    
+    //    @IBOutlet weak var moviesTableView: UITableView!
+    
     var moviesArray: NSArray?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        //moviesTableView.rowHeight = 100.00
-        //moviesTableView.dataSource = selfhttp://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=[your_api_key]&limit=1
-        self.navigationItem.title = "Top DVD's"
+        self.navigationItem.title = "Box Office"
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         tableView.insertSubview(self.refreshControl!, atIndex: 0)
-
+        
     }
     
     override func viewDidAppear(animated: Bool) {
-    
+        
         super.viewDidAppear(animated)
         reload()
     }
@@ -36,11 +33,11 @@ class ViewController: UITableViewController {
     
     func reload() {
         //UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-
+        
         SVProgressHUD.show()
-
+        
         let YourApiKey = "nxdq2a74ehrv2r8bvjqxvcwp"
-        let RottenTomatoesURLString = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey=" + YourApiKey
+        let RottenTomatoesURLString = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=" + YourApiKey
         
         let request = NSMutableURLRequest(URL: NSURL(string: RottenTomatoesURLString)!)
         
@@ -61,18 +58,18 @@ class ViewController: UITableViewController {
                 label.text = "Network Error!"
                 self.view.addSubview(label)
             }
-
+            
             SVProgressHUD.dismiss()
             
         })
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         SVProgressHUD.show()
         
         let movie = self.moviesArray![indexPath.row] as NSDictionary
@@ -95,10 +92,10 @@ class ViewController: UITableViewController {
             //println("Success")
             }, failure: { [weak cell]
                 (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
-              //  println("Failed")
+                //  println("Failed")
                 SVProgressHUD.dismiss()
         })
-            
+        
         
         let synopsis = movie["synopsis"] as NSString
         cell.movieDesc.text = synopsis
@@ -123,10 +120,10 @@ class ViewController: UITableViewController {
         
         let runtime = movie["runtime"] as Int
         cell.movieRuntime.text = "Runtime: \(runtime.description) mins"
-
+        
         return cell;
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //println("Hello")
         if let array = moviesArray {
@@ -144,19 +141,19 @@ class ViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("Did tap row \(indexPath.row)")
     }
-
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-            if segue.identifier == "showMovieControllerSegue" {
-                let cell = sender as MovieTableViewCell
-                if let indexPath = tableView.indexPathForCell(cell) {
-                    let movie = self.moviesArray![indexPath.row] as NSDictionary
-                    let moviesController = segue.destinationViewController as movieDetailsViewController
-                    moviesController.movieDetails = movie
-                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                }
+        if segue.identifier == "showMovieControllerSegue" {
+            let cell = sender as MovieTableViewCell
+            if let indexPath = tableView.indexPathForCell(cell) {
+                let movie = self.moviesArray![indexPath.row] as NSDictionary
+                let moviesController = segue.destinationViewController as movieDetailsViewController
+                moviesController.movieDetails = movie
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
         }
+    }
     
     func delay(delay:Double, closure:()->()) {
         dispatch_after(

@@ -4,34 +4,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="oQc-En-BT9">
-            <objects>
-                <viewController id="KNc-9b-C5o" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="CcG-UT-mnq"/>
-                        <viewControllerLayoutGuide type="bottom" id="vHx-yK-7za"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="yYF-Wu-vmw">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="hi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HfO-Qg-pun">
-                                <rect key="frame" x="240" y="117" width="14" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="zGv-v1-4A4"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Taf-et-2Rb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1102" y="1038"/>
-        </scene>
         <!--Movie Tab View Controller-->
         <scene sceneID="GQ3-XN-Zug">
             <objects>
@@ -44,7 +16,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="W59-JR-oYS" kind="relationship" relationship="viewControllers" id="bja-e1-LU0"/>
-                        <segue destination="ehg-hg-MhD" kind="relationship" relationship="viewControllers" id="egZ-Ex-dFQ"/>
+                        <segue destination="ysh-bI-HqK" kind="relationship" relationship="viewControllers" id="VJL-XS-vvH"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m3x-k4-gDV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -130,9 +102,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="2lG-Ft-CEW"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
-                    <connections>
-                        <outlet property="tableView" destination="BCz-KN-EM2" id="AYb-zA-JJy"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J8k-9U-QE6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -194,6 +163,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="gNm-bx-M9d"/>
                     <connections>
                         <outlet property="movieMPAA" destination="jbS-Ci-k7Q" id="lDb-Z2-uBG"/>
                         <outlet property="moviePoster" destination="SgJ-E5-7VR" id="6U0-9a-Yfu"/>
@@ -207,13 +177,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xuY-Go-wpv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2930" y="782"/>
+            <point key="canvasLocation" x="1042" y="1010"/>
         </scene>
         <!--Top DVD-->
         <scene sceneID="xSl-ek-xgd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="W59-JR-oYS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Top DVD" image="dvd.png" selectedImage="dvd.png" id="aVI-Bm-8gt"/>
+                    <tabBarItem key="tabBarItem" title="Top DVD" selectedImage="dvd.png" id="aVI-Bm-8gt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9Cy-uD-j8x">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -228,28 +198,114 @@
             </objects>
             <point key="canvasLocation" x="262" y="147"/>
         </scene>
-        <!--Now Playing-->
-        <scene sceneID="KWr-dA-gnu">
+        <!--Box Office View Controller-->
+        <scene sceneID="pQh-rX-BSx">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ehg-hg-MhD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Now Playing" image="nowplaying.png" selectedImage="nowplaying.png" id="BbB-2I-J23"/>
+                <tableViewController id="tVy-JC-42I" customClass="BoxOfficeViewController" customModule="RottenTomatoes" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="22" sectionFooterHeight="22" id="nAA-9e-NgC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="codepath.mycell" rowHeight="130" id="8sb-UD-2rC" customClass="MovieTableViewCell" customModule="RottenTomatoes" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8sb-UD-2rC" id="zqi-gj-lSq">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Movie Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJC-7o-VSA">
+                                            <rect key="frame" x="141" y="8" width="173" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drS-5f-KaF">
+                                            <rect key="frame" x="0.0" y="0.0" width="133" height="130"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="none" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egG-fl-SnG">
+                                            <rect key="frame" x="141" y="46" width="223" height="38"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Label">
+                                                    <attributes>
+                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <font key="NSFont" size="8" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="R" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aC1-UA-ZPF">
+                                            <rect key="frame" x="141" y="31" width="36" height="15"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="8"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3UY-N7-VYY">
+                                            <rect key="frame" x="141" y="98" width="15" height="10"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cdc-3Z-eMh">
+                                            <rect key="frame" x="159" y="94" width="42" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnS-Jo-hLQ">
+                                            <rect key="frame" x="206" y="92" width="76" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="movieDesc" destination="egG-fl-SnG" id="WFq-gy-ucC"/>
+                                    <outlet property="movieImage" destination="drS-5f-KaF" id="ZvS-9z-SRw"/>
+                                    <outlet property="movieRating" destination="aC1-UA-ZPF" id="5nU-Ei-BK0"/>
+                                    <outlet property="movieRuntime" destination="WnS-Jo-hLQ" id="4rb-d9-dqV"/>
+                                    <outlet property="movieTitleLabel" destination="eJC-7o-VSA" id="3Qu-IB-TOZ"/>
+                                    <outlet property="ratingImage" destination="3UY-N7-VYY" id="vpY-vN-pPs"/>
+                                    <outlet property="ratingPercentage" destination="Cdc-3Z-eMh" id="Ttc-Qz-B6k"/>
+                                    <segue destination="G5Z-Vp-GeK" kind="push" identifier="showMovieControllerSegue" id="cQb-3d-nQr"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="tVy-JC-42I" id="fot-SR-qX0"/>
+                            <outlet property="delegate" destination="tVy-JC-42I" id="Ccd-22-Iwn"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="9oV-Pm-gak"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jdv-d2-xUG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="76" y="883"/>
+        </scene>
+        <!--Box Office-->
+        <scene sceneID="uFO-zC-ruX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ysh-bI-HqK" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Box Office" id="fQA-y2-hYc"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="c35-7E-DPM">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ES4-hH-Jd6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="KNc-9b-C5o" kind="relationship" relationship="rootViewController" id="cIy-mc-blu"/>
+                        <segue destination="tVy-JC-42I" kind="relationship" relationship="rootViewController" id="ytf-3F-2r0"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VFj-Cd-GMH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="il7-1W-edS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="290" y="1038"/>
+            <point key="canvasLocation" x="-744" y="939"/>
         </scene>
     </scenes>
     <resources>
         <image name="dvd.png" width="256" height="256"/>
-        <image name="nowplaying.png" width="256" height="256"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="cQb-3d-nQr"/>
+    </inferredMetricsTieBreakers>
 </document>

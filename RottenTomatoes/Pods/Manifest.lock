@@ -23,7 +23,7 @@ PODS:
   - SVProgressHUD (1.1.2)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.0)
+  - AFNetworking (~> 2.5.0)
   - SVProgressHUD (~> 1.1.2)
 
 SPEC CHECKSUMS:
