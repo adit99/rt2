@@ -51,9 +51,13 @@ class ViewController: UITableViewController {
                 self.moviesArray = dictionary["movies"] as? NSArray
                 self.tableView.reloadData()
             } else {
-                var label = UILabel(frame: CGRectMake(0, 0, 200, 100))
-                label.center = CGPointMake(180, 24)
-                label.textAlignment = NSTextAlignment.Center
+                //self.tableView.hidden = true
+                let imageName = "network_error.png"
+                let image = UIImage(named: imageName)
+                let imageView = UIImageView(image: image!)
+                imageView.frame = CGRect(x: 125, y: 175, width: 20, height: 20)
+                self.view.addSubview(imageView)
+                var label = UILabel(frame: CGRectMake(150, 150, 150, 75))
                 label.text = "Network Error!"
                 self.view.addSubview(label)
             }

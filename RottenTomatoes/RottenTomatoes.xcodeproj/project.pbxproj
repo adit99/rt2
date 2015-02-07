@@ -15,6 +15,7 @@
 		BE76402C1A80B3DD00D93887 /* RottenTomatoesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE76402B1A80B3DD00D93887 /* RottenTomatoesTests.swift */; };
 		BE7640391A81DBD300D93887 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7640381A81DBD300D93887 /* MovieTableViewCell.swift */; };
 		BE76403B1A81E43600D93887 /* movieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE76403A1A81E43600D93887 /* movieDetailsViewController.swift */; };
+		BE91BF251A86B09E000D0B1C /* network_error.png in Resources */ = {isa = PBXBuildFile; fileRef = BE91BF241A86B09E000D0B1C /* network_error.png */; };
 		BEA0835E1A847CD4005CABB9 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA0835D1A847CD4005CABB9 /* SwiftyJSON.swift */; };
 		CA39E2A8E762705B4F7D86E6 /* libPods-RottenTomatoes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B81B15BCB4253602DA6F3D5D /* libPods-RottenTomatoes.a */; };
 /* End PBXBuildFile section */
@@ -45,6 +46,7 @@
 		BE76402B1A80B3DD00D93887 /* RottenTomatoesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RottenTomatoesTests.swift; sourceTree = "<group>"; };
 		BE7640381A81DBD300D93887 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		BE76403A1A81E43600D93887 /* movieDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = movieDetailsViewController.swift; sourceTree = "<group>"; };
+		BE91BF241A86B09E000D0B1C /* network_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = network_error.png; sourceTree = "<group>"; };
 		BEA0835D1A847CD4005CABB9 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		E08B4EC7E2A656681104434F /* Pods-RottenTomatoes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RottenTomatoes.release.xcconfig"; path = "Pods/Target Support Files/Pods-RottenTomatoes/Pods-RottenTomatoes.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 		BE7640121A80B3DD00D93887 /* RottenTomatoes */ = {
 			isa = PBXGroup;
 			children = (
+				BE91BF241A86B09E000D0B1C /* network_error.png */,
 				BE7640351A80C02C00D93887 /* movies */,
 				BE7640151A80B3DD00D93887 /* AppDelegate.swift */,
 				BE7640171A80B3DD00D93887 /* ViewController.swift */,
@@ -237,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE91BF251A86B09E000D0B1C /* network_error.png in Resources */,
 				BE76401B1A80B3DD00D93887 /* Main.storyboard in Resources */,
 				BE7640201A80B3DD00D93887 /* LaunchScreen.xib in Resources */,
 				BE76401D1A80B3DD00D93887 /* Images.xcassets in Resources */,
