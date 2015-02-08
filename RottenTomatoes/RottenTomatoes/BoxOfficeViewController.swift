@@ -8,26 +8,33 @@
 
 import UIKit
 
-class BoxOfficeViewController: UITableViewController {
+class BoxOfficeViewController: UITableViewController, UISearchBarDelegate {
     
     //    @IBOutlet weak var moviesTableView: UITableView!
     
     var moviesArray: NSArray?
+    var searchArray: NSArray?
+    var isSearching: Bool?
     
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Box Office"
+        self.isSearching = false
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         tableView.insertSubview(self.refreshControl!, atIndex: 0)
-        
+        reload()
     }
     
     override func viewDidAppear(animated: Bool) {
-        
         super.viewDidAppear(animated)
-        reload()
+        if (self.searchBar.text.isEmpty  == false) {
+            println("View did appear is searching")
+            self.isSearching = true
+        }
+        self.tableView.reloadData()
     }
     
     
@@ -39,7 +46,9 @@ class BoxOfficeViewController: UITableViewController {
         let YourApiKey = "nxdq2a74ehrv2r8bvjqxvcwp"
         let RottenTomatoesURLString = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=" + YourApiKey
         
-        let request = NSMutableURLRequest(URL: NSURL(string: RottenTomatoesURLString)!)
+        var searchURL = RottenTomatoesURLString + "&limit=50"
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: searchURL)!)
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler:{ (response, data, error) in
             if error == nil {
@@ -72,7 +81,14 @@ class BoxOfficeViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         SVProgressHUD.show()
         
-        let movie = self.moviesArray![indexPath.row] as NSDictionary
+        println("Called  tableview for row index")
+        var movie = self.moviesArray![indexPath.row] as NSDictionary
+        
+        if self.isSearching == true {
+            println("Searching")
+            movie = self.searchArray![indexPath.row] as NSDictionary
+        }
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("codepath.mycell") as MovieTableViewCell
         cell.movieTitleLabel.text = movie["title"] as NSString
         
@@ -95,7 +111,6 @@ class BoxOfficeViewController: UITableViewController {
                 //  println("Failed")
                 SVProgressHUD.dismiss()
         })
-        
         
         let synopsis = movie["synopsis"] as NSString
         cell.movieDesc.text = synopsis
@@ -126,10 +141,21 @@ class BoxOfficeViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //println("Hello")
-        if let array = moviesArray {
-            return array.count
+        if self.isSearching == true {
+            if let array = self.searchArray {
+                println("Searching through \(array.count) entries")
+                return array.count
+            }
+            else {
+                return 0
+            }
         } else {
-            return 0
+            if let array = self.moviesArray {
+                println("Searching through \(array.count) entries")
+                return array.count
+            } else {
+                return 0
+            }
         }
     }
     
@@ -147,7 +173,10 @@ class BoxOfficeViewController: UITableViewController {
         if segue.identifier == "showMovieControllerSegue" {
             let cell = sender as MovieTableViewCell
             if let indexPath = tableView.indexPathForCell(cell) {
-                let movie = self.moviesArray![indexPath.row] as NSDictionary
+                var movie = self.moviesArray![indexPath.row] as NSDictionary
+                if (self.isSearching == true) {
+                    movie = self.searchArray![indexPath.row] as NSDictionary
+                }
                 let moviesController = segue.destinationViewController as movieDetailsViewController
                 moviesController.movieDetails = movie
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -167,6 +196,36 @@ class BoxOfficeViewController: UITableViewController {
     func onRefresh() {
         reload()
         self.refreshControl?.endRefreshing()
+    }
+    
+    func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
+        
+        if (searchText.isEmpty) {
+            self.isSearching = false
+            self.tableView.reloadData()
+            return
+        }
+        
+        var sArray = [NSDictionary]()
+        if let array = self.moviesArray {
+            for i in 0...(array.count-1) {
+                let movie = array[i] as NSDictionary
+                let title = movie["title"] as NSString
+                if (((title.lowercaseString) as NSString).containsString(searchText.lowercaseString) == true) {
+                    println("\(searchText!) exists in \(title)" )
+                    sArray += [movie]
+                }
+            }
+        }
+        //println("New Search array \(sArray)")
+        self.searchArray = sArray
+        self.isSearching = true
+        self.tableView.reloadData()
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        println("done editing")
+        self.isSearching = false
     }
     
 }
