@@ -90,6 +90,7 @@ class BoxOfficeViewController: UITableViewController, UISearchBarDelegate {
         }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("codepath.mycell") as MovieTableViewCell
+        cell.movieImage.image = nil
         cell.movieTitleLabel.text = movie["title"] as NSString
         
         let poster = (movie["posters"] as NSDictionary)["detailed"] as NSString
@@ -201,6 +202,7 @@ class BoxOfficeViewController: UITableViewController, UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
         
         if (searchText.isEmpty) {
+            self.tableView.endEditing(true)
             self.isSearching = false
             self.tableView.reloadData()
             return
@@ -225,6 +227,7 @@ class BoxOfficeViewController: UITableViewController, UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         println("done editing")
+        self.tableView.endEditing(true)
         self.isSearching = false
     }
     

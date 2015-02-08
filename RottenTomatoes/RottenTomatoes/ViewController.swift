@@ -92,11 +92,11 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         //println("\(movie)")
         //let movie = self.moviesArray![indexPath.row] as NSDictionary
         let cell = tableView.dequeueReusableCellWithIdentifier("codepath.mycell") as MovieTableViewCell
+        cell.movieImage.image = nil
         cell.movieTitleLabel.text = movie["title"] as NSString
         
         let poster = (movie["posters"] as NSDictionary)["detailed"] as NSString
         let high_res_poster = poster.stringByReplacingOccurrencesOfString("_tmb", withString: "_ori")
-        //println("\(high_res_poster)")
         let url_low_res = NSURL(string: poster)
         let url = NSURL(string: high_res_poster)
         cell.movieImage.setImageWithURL(url_low_res)
@@ -107,10 +107,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         cell.movieImage.setImageWithURLRequest(url_request, placeholderImage: placeholder, success: { [weak cell] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in
             cell?.movieImage.image = image
             SVProgressHUD.dismiss()
-            //println("Success")
             }, failure: { [weak cell]
                 (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
-              //  println("Failed")
                 SVProgressHUD.dismiss()
         })
             
@@ -205,6 +203,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
         
         if (searchText.isEmpty) {
+            self.tableView.endEditing(true)
             self.isSearching = false
             self.tableView.reloadData()
             return
@@ -229,6 +228,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         println("done editing")
+        self.tableView.endEditing(true)
         self.isSearching = false
     }
 }

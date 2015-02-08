@@ -103,8 +103,10 @@ class movieDetailsViewController: UIViewController {
         //XXX: Fix sizing of this
         let synopsis = movie["synopsis"] as NSString
         self.movieSynopsis.text = synopsis
+        self.movieSynopsis.sizeToFit()
         self.movieScrollView.contentSize=CGSizeMake(320,520);
-
+        /*2) int totalHeight = self.movieLabel.frame.size.height + self.movieDetailLabel.frame.size.height + self.movieRatingsLabel.frame.size.height + 250; (250 is for padding adjust it as per what you like.)
+        3) self.textScrollView.contentSize = CGSizeMake(self.view.frame.size.width, totalHeight);*/
     }
 
     override func didReceiveMemoryWarning() {
