@@ -23,6 +23,8 @@ class movieDetailsViewController: UIViewController {
     
     var movieDetails: NSDictionary?
     
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -100,15 +102,53 @@ class movieDetailsViewController: UIViewController {
             self.movieMPAA.setImageWithURL(pg_url)
         }
         
-        //XXX: Fix sizing of this
         let synopsis = movie["synopsis"] as NSString
+        self.movieSynopsis.numberOfLines = 0
         self.movieSynopsis.text = synopsis
         self.movieSynopsis.sizeToFit()
-        self.movieScrollView.contentSize=CGSizeMake(320,520);
-        /*2) int totalHeight = self.movieLabel.frame.size.height + self.movieDetailLabel.frame.size.height + self.movieRatingsLabel.frame.size.height + 250; (250 is for padding adjust it as per what you like.)
-        3) self.textScrollView.contentSize = CGSizeMake(self.view.frame.size.width, totalHeight);*/
+        self.movieSynopsis.setNeedsDisplay()
+        
+        //Disable scrolling but animate the view (below) so that the entire movie synopsis is viewable on click
+        var totalHeight = self.movieTitle.frame.size.height + self.movieMPAA.frame.size.height + self.movieSynopsis.frame.size.height + 260
+        self.movieScrollView.scrollEnabled = false
+        self.movieScrollView.frame.size.height = totalHeight
+
+        println("X:\(self.movieScrollView.frame.origin.x)")
+        println("Y:\(self.movieScrollView.frame.origin.y)")
+        
     }
 
+    
+    @IBAction func onTap(sender: AnyObject) {
+        var mv = self.movieScrollView.frame
+        var newFrame = mv
+        
+        if mv.origin.y == 233.0 {
+            newFrame.origin.y = 413.0
+        } else if mv.origin.y == 413.0 {
+            newFrame.origin.y = 233.0
+        }
+        
+       // println("View Height \(mv.size.height)")
+       // println("View Y \(mv.origin.y)")
+
+        //Try to adjust the frame based on the height of the view
+        /*switch (mv.size.height) {
+            case 200...400:
+                newFrame.origin.y = 413.0
+            case 400...600:
+                newFrame.origin.y = 313.0
+            case 600...900:
+                newFrame.origin.y = 213.0
+            default:
+                newFrame.origin.y = 213.0
+        }*/
+        
+        UIView.animateWithDuration(0.4,
+            animations:{
+                self.movieScrollView.frame = newFrame
+        })
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
