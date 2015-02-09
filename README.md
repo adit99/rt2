@@ -13,7 +13,7 @@ Optional Stories Completed
 * [x] Add a tab bar for Box Office and DVD 
   * used UITabViewController
 * [x] Add a search bar (used UISearchBar and delegate methods. 
-  * Adopted filtering approach rather than querying rotten tomatoes search API)
+  * Adopted filtering approach rather than querying rotten tomatoes search API
 * [x] For the large poster, load the low-res image first, switch to high-res when complete
 * [x] Customize the highlight and selection effect of the cell 
   *  Implemented on Tap gesture recognizer to animate scrolling of movie synopsis label
